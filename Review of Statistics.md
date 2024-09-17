@@ -1,0 +1,302 @@
+# Review of Statistics
+
+## Random variables
+
+> **Example**
+>
+> Let $Ω$ be our sample space for an experiment where we flip a coin three times
+>
+> $$
+> Ω = \{\text{HHH}, \text{HHH}, \text{HHH}, \text{HHH}, \text{HHH}, \text{HHH}\}
+> $$
+>
+> This is **not** a random variable. We **can** define a random variable $X$ as the number of heads in
+> the experiment.
+>
+> $$
+> X ∈ \{0, 1, 2, 3\}
+> $$
+
+**Def:** Random variable
+: A real funciton that assigns a number to each event in the sample space.  
+Example: $X: Ω⇒\R$
+
+Random variables can be classified in two large categories:
+
+* **Discrete RV**
+* **Continuous RV**
+
+Continuous RVs have what's called **support**, which is the range over which the RV can take values.
+
+## Probability density function
+
+The probability density function (pdf) of a continuous random variable is a function that describes
+the likelihood of the random variable taking on a particular value.
+
+$$
+p_X(x) = \Pr\{X=x\}
+$$
+
+Where $X$ is the random variable and $x$ is a particular value of the random variable.
+
+### Properties
+
+1. $p_X(x) ≥ 0$
+1. $∫_{(X)} p_X(x) dx = 1$, where the integral is over the support of $X$.
+1. $\Pr\{a≤x≤b\} = ∫_a^b p_X(x) dx$
+
+### Relevant PDFs
+
+#### Uniform distribution
+
+$$
+X ∼ U(a, b) ⇒ p_X(x) = \begin{cases}
+    \frac{1}{b-a} & a≤x≤b \\
+    0 & \text{otherwise}
+\end{cases}
+$$
+
+Where $a$ and $b$ are the lower and upper bounds of the support of $X$.
+
+* Its peak amplitude is $\frac{1}{b-a}$.
+
+#### Gaussian distribution
+
+$$
+X ∼ G(μ, σ^2) ⇒ p_X(x) = \frac{1}{\sqrt{2πσ^2}} e^{\displaystyle{-\frac{(x-μ)^2}{2σ^2}}}
+$$
+
+Where $μ$ (or $m$) is the mean and $σ^2$ (or $v$) is the variance of $X$.
+
+* Its peak amplitude is $\frac{1}{\sqrt{2πσ^2}}$, located at $μ$.
+
+### Laplace distribution
+
+The Laplace distribution is similar to the Gaussian in that they are both symmetric, but the Laplace
+has a sharp peak and falls off exponentially.
+
+$$
+X ∼ Laplace(μ, b) ⇒ p_X(x) = \frac{1}{2b} e^{\displaystyle{-\frac{|x-μ|}{b}}}
+$$
+
+Where $μ$ (or $m$) is the mean and $b$ is the scale parameter. The variance of $X$ is $2b^2$.
+
+### Exponential distribution
+
+$$
+X ∼ Exponential(λ) ⇒ p_X(x) = λ e^{-λx} · u(x)
+$$
+
+Where $λ$ is the rate parameter and $u(x)$ is the unit step function.
+
+> **Example**
+>
+> Let's consider a case where we have a light bulb with a lifetime in years that follows an
+> exponential distribution with a pdf of $p_X(x) = \exp(-x)·u(x)$
+>
+> The probability that the light bulb will last more than 1 year is:
+>
+> $$
+> \Pr\{X≥1\} = e^{-1} = 0.3679
+> $$
+
+## Distribution function
+
+$$
+F_X(x) = \Pr\{X≤x\} = ∫_{-∞}^x p_X(t) dt \\
+p_X(x) = \frac{d}{dx} F_X(x)
+$$
+
+## Quantile
+
+Not to be confused with "quartile".
+
+**Quantiles** divide the distribution into equal parts. The quantile we're most interested in is the
+quantile-2, which divides the distribution into two equal parts of area 0.5 each. Other quantiles
+of interes are the quantile-4 (quartile) and quantile-100 (percentile).
+
+The **median** is the value which divides the distribution into two equal parts.
+
+> **Example**
+>
+> The median for a Exponential distribution is a value such that
+>
+> $$
+> ∫_0^{MEDIAN} \exp (-x) dx = {1 \over 2} = ∫_{MEDIAN}^∞ \exp (-x) dx
+> $$
+>
+> We can solve this to find that
+>
+> $$
+> \begin{aligned}
+>     - \exp(-x) \Big|_0^{MEDIAN} &= {1 \over 2} \\
+>     1 - \exp(-MEDIAN) &= {1 \over 2} \\
+>     \exp(-MEDIAN) &= {1 \over 2} \\
+>     MEDIAN &= \ln 2 ≈ 0.693
+> \end{aligned}
+> $$
+
+In some cases, such as the Uniform distribution, the median is the same as the mean value (expected
+value). If it can be solved graphically, it's easier to do so.
+
+## Moment of a distribution
+
+The moment of order $n$ of a distribution is defined as
+
+$$
+E[x^n] = ∫_{(X)} x^n p_X(x) dx
+$$
+
+It should always be a number, not dependent on $x$.
+
+The moment of order $1$ is the mean value of the distribution.
+
+> **Example**
+>
+> In order to compute $E[xy]$, we can use the same formula as above, but using a double integral and
+> the joint pdf of $X$ and $Y$.
+>
+> $$
+> E[xy] = ∫_{(X)} ∫_{(Y)} xy p_{XY}(x, y) dx dy
+> $$
+
+&nbsp;
+
+> **Example**
+>
+> Let's see how to compute this moment of order $2$
+>
+> $$
+> E[X^2 | Y=y] = |_{(X)} x^2 p_{X|Y}(x|y) dx
+> $$
+
+### Central moment ($n$-th order)
+
+$$
+E\left[(x-E[x])^2\right] = E\left[x^2\right] - E[x]^2 = V[x]
+$$
+
+### Some interesiting properties
+
+* $E[aX + Y] = a · E[X ] + E[Y]$
+* $Var [aX + b] = a^2 · Var[X]$
+
+> **Examples**
+>
+> * For $X ∼ U(a, b)$:
+>     * $E[X ] = \frac{b+a}{2}$
+>     * $Var[X ] = \frac{(b-a)^2}{12}$
+>
+> * For $X ∼ G(μ, σ^2)$:
+>     * $E[X ] = μ$
+>     * $Var[X ] = σ^2$
+>
+> * For an exponential distribution:
+>     * $E[X ] = \frac{1}{λ}$
+>     * $Var[X ] = \frac{1}{λ^2}$
+
+## Two Random Variables
+
+### Joint PDF
+
+The Joint PDF of two random variables $X$ and $Y$ is $p_{XY}(x,y)$
+
+$$
+p_{XY}(x, y) = \Pr\{X=x, Y=y\}
+$$
+
+$$
+∫_{(X)} ∫_{(Y)} p_{XY}(x, y) dx dy = 1
+$$
+
+> **Example**
+>
+> The joint pdf for an an experiment with $N$ Gaussian random variables is
+>
+> $$
+> p_{\bar X} (\bar X) = \frac{1}{(2π)^{N/2} |V|^{1/2}} \exp \left(-\frac{1}{2} (\bar X - \bar μ_X)^T V^{-1} (\bar X - \bar μ_X)\right)
+> $$
+>
+> Where $\bar X$ is the vector of random variables, of dimension $N$, $\bar μ_X$ is the vector of
+> means, and $V$ (or $Σ$) is the covariance matrix.
+>
+> $$
+> V = \begin{vmatrix}
+>     Var[x_1] & Cov[x_1, x_2] & \cdots & Cov[x_1, x_N] \\
+>     Cov[x_2, x_1] & Var[x_2] & \cdots & Cov[x_2, x_N] \\
+>     \vdots & \vdots & \ddots & \vdots \\
+>     Cov[x_N, x_1] & Cov[x_N, x_2] & \cdots & Var[x_N]
+> \end{vmatrix}
+> $$
+
+### Marginal PDF
+
+The marginal PDF is the PDF of a single random variable, obtained by integrating the joint PDF over
+the other random variable.
+
+$$
+p_X(x) = ∫_{(Y)} p_{XY}(x, y) dy \\
+p_Y(y) = ∫_{(X)} p_{XY}(x, y) dx
+$$
+
+> **Example**
+
+Let $X$ and $Y$ be two random variables with the following joint pdf:
+
+$$
+p_{XY}(x, y) = \begin{cases}
+    1 & |y|≤x; \; 0≤x≤1 \\
+    0 & \text{otherwise}
+\end{cases}
+$$
+
+The joint PDF of $X$ is
+
+$$
+\begin{align*}
+    p_X(x) &= ∫_{(Y)} p_{XY}(x, y) dy \\
+    &= ∫_{(y)} \begin{cases}
+        1 & 0≤x≤1 \\
+        0 & \text{otherwise}
+    \end{cases} dy \\
+    &= ∫_{-x}^x 1 dy \\
+    &= 2x , \; 0≤x≤1
+\end{align*}
+$$
+
+And the joint PDF of $Y$ is
+
+$$
+\begin{align*}
+    p_Y(y) &= ∫_{(X)} p_{XY}(x, y) dx \\
+    &= ∫_{(x)} 1 dx \\
+    &= \begin{cases}
+        ∫_{-y}^1 dx = 1+y & -1≤y≤0 \\
+        ∫_y^1 dx = 1-y & 0≤y≤1
+    \end{cases} \\
+    &= 1 - |y| , \; |y|≤1
+\end{align*}
+$$
+
+The conditional probability given one of the random variables is given by
+
+$$
+p(x|Y=y) = \frac{p(X=x, Y=y)}{p(Y=y)} = \frac{p(x,y)}{p(y)} \\
+p(y|x) = \frac{p(x,y)}{p(x)}
+$$
+
+### Case of independent random variables
+
+The joint PDF of two independent random variables is the product of the individual PDFs:
+
+$$
+p_{XY}(x, y) = p_X(x) · p_Y(y)
+$$
+
+And the conditional probability of any one variable is independent of the other variable:
+$$
+p(x|y) = \frac{p(x,y)}{p(y)} = \frac{p_X(x) · p_Y(y)}{p_Y(y)} = p_X(x)
+$$
+
+Independence implies uncorrelation ($Cov(x,y)=0$), but the opposite is not true except for Gaussian
+random variables.
