@@ -300,3 +300,49 @@ $$
 
 Independence implies uncorrelation ($Cov(x,y)=0$), but the opposite is not true except for Gaussian
 random variables.
+
+### Expression for two-dimensional Gaussian distribution
+
+$$
+p_{X_1, X_2} ∼ G\left(
+    \begin{bmatrix}
+        x_1 \\
+        x_2
+    \end{bmatrix}
+    \middle|
+    \begin{bmatrix}
+        μ_1 \\
+        μ_2
+    \end{bmatrix}
+    \underbrace{
+    \begin{bmatrix}
+        σ^2_{X_1} & ρ \\
+        ρ & σ^2_{X_2}
+    \end{bmatrix}
+    }_{\clap{Variance-Covariance matrix}}
+\right)
+$$
+
+Where $ρ$ is the Covariance (a single value).
+
+## Transformation of Random Variables
+
+### One-dimensional
+
+Let $X$ be a random variable with known PDF $p_X(x)$.
+
+We can define a new random variable $Y$ that is related to $X$ by a known function
+
+$$
+Y = f(X)
+$$
+
+Our objective is to find p_Y(y), the PDF of $Y$.
+
+$$
+p_Y(y) = p_X(\underbrace{x(y)}_{x as a function of y}) · \left|\frac{∂}{∂y} x(y) \right|
+$$
+
+### Two-dimensional
+
+This is applied to Gaussian distributions.
